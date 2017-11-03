@@ -1,0 +1,28 @@
+{
+    "name": "test",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "babel-node": "babel-node --presets=node8",
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start": "set PORT=3001 & nodemon --exec npm run babel-node -- ./server.js"
+    },
+    "author": "Mikayel Abrahamyan",
+    "license": "ISC",
+    "dependencies": {
+        "babel": "^6.23.0",
+        "body-parser": "^1.18.2",
+        "express": "^4.16.1",
+        "express-validator": "^4.2.1",
+        "jsonwebtoken": "^8.1.0",
+        "lodash": "^4.17.4",
+        "mongoose": "^4.12.3",
+        "nodemailer": "^4.2.0"
+    },
+    "devDependencies": {
+        "babel-cli": "^6.26.0",
+        "babel-preset-node8": "^1.2.0",
+        "nodemon": "^1.12.1"
+    }
+}
