@@ -46,6 +46,9 @@ app.use(function(err, req, res, next){
     return;
 });
 
-let listener = app.listen(app.get('port'),'localhost',function(){
+let listener = app.listen(app.get('port'),'192.168.0.16',function(){
     console.log('Example app listening at http://%s:%s', listener.address().address, listener.address().port);
+});
+let listener1 = app.listen(app.get('port'),'localhost',function(){
+    console.log('Example app listening at http://%s:%s', listener1.address().address, listener1.address().port);
 });
