@@ -1,15 +1,9 @@
 import express from 'express';
 import UserModel from '../models/user_model';
-var router = express.Router();
+const router = express.Router();
 
 
-router.use((req,res,next)=>{
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'GET,POST');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-    next();
-});
-router.use(checkAuthentication);
+
 router.get('/issignin', MustBeSignin ,async function(req, res, next){  
     try {
         res.json(req.user);
@@ -114,8 +108,8 @@ router.post('/update',MustBeSuperAdmin ,async function (req, res, next) {
         return next(error);
     }
 });
-module.exports = router;
-async function checkAuthentication(req,res,next){
+export default router;
+export async function checkAuthentication(req,res,next){
     try {
         let user = await UserModel.prototype.IsSignin(req.headers.authorization);
         user = user.user;
@@ -135,21 +129,21 @@ async function checkAuthentication(req,res,next){
         next();
     }
 }
-function MustBeSignin(req,res,next){
+export function MustBeSignin(req,res,next){
     if(req.IsSignin){
         next();
     } else {
         next(new Error('you must signin'));
     } 
 }
-function MustBeSuperAdmin(req,res,next){
+export function MustBeSuperAdmin(req,res,next){
     if(req.IsSignin && req.SuperAdmin){
         next();
     } else {
         next(new Error('you must be Super Admin'));
     } 
 }
-function NotMustBeSignin(req,res,next){
+export function NotMustBeSignin(req,res,next){
     if(!req.IsSignin){
         next();
     } else {

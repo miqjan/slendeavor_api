@@ -3,10 +3,12 @@ import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 import validator  from 'express-validator';
 
-import TrustedRouter  from './routes/trusted_router';
-import SlideRouter  from './routes/slide_router';
-import UserRouter from './routes/user_router';
-
+import UserRouter, { checkAuthentication } from './routes/user_router';
+import PartnerRouter from './routes/partner_router';
+import GalleryRouter from './routes/gallery_router';
+import ServiceRouter from './routes/service_router';
+import TeamRouter from './routes/team_router';
+import WorkRouter from './routes/work_router';
 
 
 let app = express();
@@ -21,11 +23,19 @@ app.set('port', process.env.PORT || 3000);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
 app.use(validator());
-
-app.use('/trusted', TrustedRouter);
-app.use('/slide', SlideRouter);
+app.use((req,res,next)=>{
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET,POST');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    next();
+});
+app.use(checkAuthentication);
+app.use('/work', WorkRouter);
+app.use('/gallery', GalleryRouter);
 app.use('/user', UserRouter);
-
+app.use('/team', TeamRouter);
+app.use('/service', ServiceRouter);
+app.use('/partner', PartnerRouter);
 
 
 
@@ -46,9 +56,9 @@ app.use(function(err, req, res, next){
     return;
 });
 
-let listener = app.listen(app.get('port'),'192.168.0.16',function(){
+let listener = app.listen(app.get('port'),'192.168.0.56',function(){
     console.log('Example app listening at http://%s:%s', listener.address().address, listener.address().port);
 });
-let listener1 = app.listen(app.get('port'),'localhost',function(){
-    console.log('Example app listening at http://%s:%s', listener1.address().address, listener1.address().port);
-});
+// let listener1 = app.listen(app.get('port'),'localhost',function(){
+//     console.log('Example app listening at http://%s:%s', listener1.address().address, listener1.address().port);
+// });
