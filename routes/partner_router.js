@@ -4,11 +4,16 @@ import {MustBeSuperAdmin,MustBeSignin,NotMustBeSignin} from './user_router';
 const router = express.Router();
 
 router.get('/', async function(req, res, next) {  
-    res.send('signin');
+    try {
+        res.json((await PartnerModel.find({})));
+    } catch (error) {
+        return next(error);
+    }
 });
 router.post('/', MustBeSuperAdmin, async function(req, res, next) {  
     try {
-        req.checkParams('img','Incorect url of verification').notEmpty();
+        
+        req.checkBody('img','Incorect url of verification').notEmpty();
         await req.asyncValidationErrors();
         let inserted = new PartnerModel(req.body); 
         res.json( await inserted.save() );

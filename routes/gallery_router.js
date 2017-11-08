@@ -4,17 +4,21 @@ import {MustBeSuperAdmin,MustBeSignin,NotMustBeSignin} from './user_router';
 const router = express.Router();
 
 router.get('/', async function(req, res, next) {  
-    res.send('signin');
+    try {
+        res.json(await GalleryModel.find({}));
+    } catch (error) {
+        return next(error);
+    }
 });
 router.post('/', MustBeSuperAdmin, async function(req, res, next) {  
     try {
-        req.checkParams('title','Incorect url of verification').notEmpty();
-        req.checkParams('info','Incorect url of verification').notEmpty();
-        req.checkParams('site_url','Incorect url of verification').notEmpty();
-        req.checkParams('video','Incorect url of verification').notEmpty();
-        req.checkParams('img','Incorect url of verification').notEmpty();
-        req.checkParams('img_hover','Incorect url of verification').notEmpty();
-        req.checkParams('site','Incorect url of verification').notEmpty();
+        req.checkBody('title','Incorect url of verification').notEmpty();
+        req.checkBody('info','Incorect url of verification').notEmpty();
+        req.checkBody('site_url','Incorect url of verification').notEmpty();
+        req.checkBody('video','Incorect url of verification').notEmpty();
+        req.checkBody('img','Incorect url of verification').notEmpty();
+        req.checkBody('img_hover','Incorect url of verification').notEmpty();
+        req.checkBody('site','Incorect url of verification').notEmpty();
         await req.asyncValidationErrors();
         let inserted = new GalleryModel(req.body); 
         res.json( await inserted.save() );

@@ -7,7 +7,7 @@ let ServiceSchema = new Schema({
     pre_title: {type: String},
     title: {type: String},
     text: {type: String},
-    img: {type: Buffer},
+    img: {type: String},
     color: {type: String}
 });
 export default mongoose.model('ServiceSchema', ServiceSchema);

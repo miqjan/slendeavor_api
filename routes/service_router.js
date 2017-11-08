@@ -4,15 +4,19 @@ import {MustBeSuperAdmin,MustBeSignin,NotMustBeSignin} from './user_router';
 const router = express.Router();
 
 router.get('/', async function(req, res, next) {  
-    res.send('signin');
+    try {
+        res.json(await ServiceModel.find({}));
+    } catch (error) {
+        return next(error);
+    }
 });
 router.post('/', MustBeSuperAdmin, async function(req, res, next) {  
     try {
-        req.checkParams('icon','Incorect url of verification').notEmpty();
-        req.checkParams('pre_title','Incorect url of verification').notEmpty();
-        req.checkParams('title','Incorect url of verification').notEmpty();
-        req.checkParams('img','Incorect url of verification').notEmpty();
-        req.checkParams('color','Incorect url of verification').notEmpty();
+        req.checkBody('icon','Incorect url of verification').notEmpty();
+        req.checkBody('pre_title','Incorect url of verification').notEmpty();
+        req.checkBody('title','Incorect url of verification').notEmpty();
+        req.checkBody('img','Incorect url of verification').notEmpty();
+        req.checkBody('color','Incorect url of verification').notEmpty();
         await req.asyncValidationErrors();
         let inserted = new ServiceModel(req.body); 
         res.json( await inserted.save() );

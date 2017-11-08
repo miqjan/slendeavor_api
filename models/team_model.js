@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 
 let TeamSchema = new Schema({
-  img:{type:Buffer},
+  img:{type:String},
   info:{type:String},
   name:{type:String}
 });

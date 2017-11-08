@@ -8,7 +8,7 @@ let GallerySchema = new Schema({
   site_url:{type: String},
   text:{type: String},
   video:{type:String},
-  img:{type:Buffer},
+  img:{type:String},
   img_hover:{type:Buffer},
   site:{type:String}
 });
