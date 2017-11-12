@@ -12,19 +12,19 @@ router.get('/issignin', MustBeSignin ,async function(req, res, next){
     } 
 });
 router.post('/insert', MustBeSuperAdmin ,async function(req, res, next) { 
-    
+    console.dir(req.body);
     try {
-        req.checkBody('firstname', 'Firstname is required').notEmpty();
-        req.checkBody('lastname', 'Lastname is required').notEmpty();
+        req.checkBody('firstName', 'Firstname is required').notEmpty();
+        req.checkBody('lastName', 'Lastname is required').notEmpty();
         req.checkBody('email', 'Email is required').isEmail();
         req.checkBody('phone','Phone is required').isMobilePhone('any');
         req.checkBody('type','Type is required').isNumeric();
         req.checkBody('password','Password is required').notEmpty();
         await req.asyncValidationErrors();
-        
+       
         let inserted = new UserModel({
-            firstname: req.body.firstname,
-            lastname : req.body.lastname,
+            firstname: req.body.firstName,
+            lastname : req.body.lastName,
             email    : req.body.email,
             phone    : req.body.phone,
             type     : req.body.type,
@@ -93,8 +93,8 @@ router.post('/remove',MustBeSuperAdmin ,async function (req, res, next) {
 router.post('/update',MustBeSuperAdmin ,async function (req, res, next) {  
     try {
         req.checkBody('id', 'id is required').notEmpty();
-        req.checkBody('firstname', 'First name is required ').notEmpty();
-        req.checkBody('lastname','Last name is required').notEmpty();
+        req.checkBody('firstName', 'First name is required ').notEmpty();
+        req.checkBody('lastName','Last name is required').notEmpty();
         await req.asyncValidationErrors();
         
         if(req.body.idcdv  == req.user._id){

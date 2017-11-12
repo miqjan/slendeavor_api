@@ -42,10 +42,21 @@ UserConstruct.prototype.InsertUser = async function(){
 			return false;
 		}
 		this.password = crypto.createHash('sha1').update(this.password).digest("hex");
-		this.qnfirmkey = crypto.createHash('sha1').update(this.email).digest("hex");	
+		this.qnfirmkey = crypto.createHash('sha1').update(this.email).digest("hex");
+		let user = (await this.save()).toObject();
+		let usertemp = {
+			_id:user._id,
+			firstname:user.firstname,
+			lastname:user.lastname,
+			email:user.email,
+			phone:user.phone,
+			removed:user.removed,
+			type:user.type,
+			status:user.status
+		}
 		return {
-			user: await this.save(),
-			message: await transporter.sendMail(message(this.email,this.qnfirmkey,this._id))
+			user: usertemp
+			//message: await transporter.sendMail(message(this.email,this.qnfirmkey,this._id))
 		};
 	} catch (error) {
 		throw error;
