@@ -19,16 +19,37 @@ router.post('/', MustBeSuperAdmin, async function(req, res, next) {
         req.checkBody('color','Incorect url of verification').notEmpty();
         await req.asyncValidationErrors();
         let inserted = new ServiceModel(req.body); 
-        res.json( await inserted.save() );
+        await inserted.save();
+        res.json( await ServiceModel.find({}) );
     } catch (error) {
         return next(error);
     } 
 });
 router.post('/edit', MustBeSuperAdmin, async function(req, res, next) {  
-    res.send('signup');
+    try {
+        req.checkBody('icon','Incorect url of verification').notEmpty();
+        req.checkBody('pre_title','Incorect url of verification').notEmpty();
+        req.checkBody('title','Incorect url of verification').notEmpty();
+        req.checkBody('img','Incorect url of verification').notEmpty();
+        req.checkBody('color','Incorect url of verification').notEmpty();
+        await req.asyncValidationErrors();
+       
+        await ServiceModel.update(req.body).where({"_id":req.body._id});
+        res.json(await ServiceModel.find({}));
+    } catch (error) {
+        return next(error);
+    } 
 });
-router.delete('/', MustBeSuperAdmin , async function(req,res,next){
-
+router.post('/delate', MustBeSuperAdmin , async function(req,res,next){
+    try {
+        req.checkBody('row_arr','Incorect img verification').notEmpty();
+        await req.asyncValidationErrors();
+        console.dir(req.body);
+        await ServiceModel.remove({ _id: { $in: req.body.row_arr }});
+        res.json(await ServiceModel.find({}));
+    } catch (error) {
+        return next(error);
+    }
 });
 
 export default router;

@@ -18,16 +18,35 @@ router.post('/', MustBeSuperAdmin, async function(req, res, next) {
         req.checkBody('text','Incorect url of verification').notEmpty();
         await req.asyncValidationErrors();
         let inserted = new WorkModel(req.body); 
-        res.json( await inserted.save() );
+        await inserted.save();
+        res.json(await WorkModel.find({}));
     } catch (error) {
         return next(error);
     } 
 });
 router.post('/edit', MustBeSuperAdmin, async function(req, res, next) {  
-    res.send('signup');
+    try {
+        req.checkBody('icon','Incorect url of verification').notEmpty();
+        req.checkBody('title','Incorect url of verification').notEmpty();
+        req.checkBody('text','Incorect url of verification').notEmpty();
+        await req.asyncValidationErrors();
+       
+        await WorkModel.update(req.body).where({"_id":req.body._id});
+        res.json(await WorkModel.find({}));
+    } catch (error) {
+        return next(error);
+    } 
 });
-router.delete('/', MustBeSuperAdmin , async function(req,res,next){
-
+router.post('/delate', MustBeSuperAdmin , async function(req,res,next){
+    try {
+        req.checkBody('row_arr','Incorect img verification').notEmpty();
+        await req.asyncValidationErrors();
+        console.dir(req.body);
+        await WorkModel.remove({ _id: { $in: req.body.row_arr }});
+        res.json(await WorkModel.find({}));
+    } catch (error) {
+        return next(error);
+    }
 });
 
 export default router;

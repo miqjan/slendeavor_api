@@ -9,6 +9,7 @@ import GalleryRouter from './routes/gallery_router';
 import ServiceRouter from './routes/service_router';
 import TeamRouter from './routes/team_router';
 import WorkRouter from './routes/work_router';
+import ImageesRouter from './routes/imggallery_router';
 
 
 let app = express();
@@ -20,8 +21,9 @@ mongoose.connection.once('open', ()=>console.log('connected'));
 app.set('port', process.env.PORT || 3000);
 
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded());
+app.use(bodyParser.json({limit: '50mb'}));
+app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
+
 app.use(validator());
 app.use((req,res,next)=>{
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -29,6 +31,7 @@ app.use((req,res,next)=>{
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
     next();
 });
+app.use(express.static('public'));
 app.use(checkAuthentication);
 app.use('/work', WorkRouter);
 app.use('/gallery', GalleryRouter);
@@ -36,6 +39,7 @@ app.use('/user', UserRouter);
 app.use('/team', TeamRouter);
 app.use('/service', ServiceRouter);
 app.use('/partner', PartnerRouter);
+app.use('/images',ImageesRouter);
 
 
 

@@ -12,21 +12,41 @@ router.get('/', async function(req, res, next) {
 });
 router.post('/', MustBeSuperAdmin, async function(req, res, next) {  
     try {
-        req.checkBody('img','Incorect url of verification').notEmpty();
-        req.checkBody('info','Incorect url of verification').notEmpty();
-        req.checkBody('name','Incorect url of verification').notEmpty();
+        req.checkBody('img','Incorect img verification').notEmpty();
+        req.checkBody('info','Incorect info verification').notEmpty();
+        req.checkBody('name','Incorect name verification').notEmpty();
         await req.asyncValidationErrors();
         let inserted = new TeamModel(req.body); 
-        res.json( await inserted.save() );
+        await inserted.save();
+        res.json(await TeamModel.find({}));
     } catch (error) {
         return next(error);
     } 
 });
 router.post('/edit', MustBeSuperAdmin, async function(req, res, next) {  
-    res.send('signup');
+    try {
+        req.checkBody('img','Incorect img verification').notEmpty();
+        req.checkBody('info','Incorect info verification').notEmpty();
+        req.checkBody('name','Incorect name verification').notEmpty();
+        req.checkBody('_id','Incorect name verification').notEmpty();
+        await req.asyncValidationErrors();
+       
+        await TeamModel.update(req.body).where({"_id":req.body._id});
+        res.json(await TeamModel.find({}));
+    } catch (error) {
+        return next(error);
+    } 
 });
-router.delete('/', MustBeSuperAdmin , async function(req,res,next){
-
+router.post('/delate', MustBeSuperAdmin , async function(req,res,next){
+    try {
+        req.checkBody('row_arr','Incorect img verification').notEmpty();
+        await req.asyncValidationErrors();
+        console.dir(req.body);
+        await TeamModel.remove({ _id: { $in: req.body.row_arr }});
+        res.json(await TeamModel.find({}));
+    } catch (error) {
+        return next(error);
+    }
 });
 
 export default router;
