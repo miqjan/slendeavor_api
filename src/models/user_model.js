@@ -4,7 +4,7 @@ import crypto from 'crypto';
 import _ from 'lodash';
 import jwt from 'jsonwebtoken';
 
-import nodemailer_config from '../config/nodemailer';
+import nodemailer_config from '../../config/nodemailer';
 const Schema = mongoose.Schema;
 const transporter = nodemailer.createTransport({service: nodemailer_config.service,
 	auth: nodemailer_config.auth
