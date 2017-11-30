@@ -4,11 +4,8 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "clean": "rm -rf build && mkdir build",
         "build": "babel ./src --presets babel-preset-es2015 --out-dir dist",
-        "start-prod": "set PORT=3001 & set NODE_ENV=production& node ./dist/server.js",
-        "babel-node": "babel-node --presets=node8",
-        "test": "echo \"Error: no test specified\" && exit 1",
+        "start-prod": "node ./dist/server.js",
         "start": "set PORT=3001 & nodemon --exec npm run babel-node -- ./src/server.js"
     },
     "author": "Mikayel Abrahamyan",
