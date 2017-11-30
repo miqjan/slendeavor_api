@@ -67,5 +67,5 @@ app.use(function(err, req, res, next){
 //     console.log('Example app listening at http://%s:%s', listener.address().address, listener.address().port);
 // });
 let listener1 = app.listen(app.get('port'),function(){
-    console.log('api listening at http://%s:%s', listener1.address().address, listener1.address().port);
+    console.log('api listening at http://%s:%s', listener1.address().address, listener1.address().port); 
 });
