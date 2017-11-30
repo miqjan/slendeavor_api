@@ -12,7 +12,7 @@ router.get('/issignin', MustBeSignin ,async function(req, res, next){
     } 
 });
 router.post('/insert', MustBeSuperAdmin ,async function(req, res, next) { 
-    console.dir(req.body);
+ 
     try {
         req.checkBody('firstName', 'Firstname is required').notEmpty();
         req.checkBody('lastName', 'Lastname is required').notEmpty();

@@ -41,7 +41,7 @@ router.post('/delate', MustBeSuperAdmin , async function(req,res,next){
     try {
         req.checkBody('row_arr','Incorect img verification').notEmpty();
         await req.asyncValidationErrors();
-        console.dir(req.body);
+   
         await TeamModel.remove({ _id: { $in: req.body.row_arr }});
         res.json(await TeamModel.find({}));
     } catch (error) {

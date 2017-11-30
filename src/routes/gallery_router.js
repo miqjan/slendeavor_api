@@ -22,7 +22,7 @@ router.post('/', MustBeSuperAdmin, async function(req, res, next) {
         req.checkBody('img_hover','Incorect url of verification').notEmpty();
         req.checkBody('site','Incorect url of verification').notEmpty();
         await req.asyncValidationErrors();
-        console.dir(req.body);
+     
         let inserted = new GalleryModel(req.body); 
         await inserted.save();
         res.json( await GalleryModel.find({}) );
@@ -40,7 +40,7 @@ router.post('/edit', MustBeSuperAdmin, async function(req, res, next) {
         req.checkBody('img_hover','Incorect url of verification').notEmpty();
         req.checkBody('site','Incorect url of verification').notEmpty();
         await req.asyncValidationErrors();
-        console.dir(req.body);
+       
         await GalleryModel.update(req.body).where({"_id":req.body._id});
         res.json(await GalleryModel.find({}));
     } catch (error) {
@@ -51,7 +51,7 @@ router.post('/delate', MustBeSuperAdmin , async function(req,res,next){
     try {
         req.checkBody('row_arr','Incorect img verification').notEmpty();
         await req.asyncValidationErrors();
-        console.dir(req.body);
+      
         await GalleryModel.remove({ _id: { $in: req.body.row_arr }});
         res.json(await GalleryModel.find({}));
     } catch (error) {

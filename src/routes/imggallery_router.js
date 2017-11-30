@@ -24,7 +24,7 @@ router.post('/', MustBeSuperAdmin, async function(req, res, next) {
         let data = matches[2];
         let buffer = new Buffer(data, 'base64');
         
-        //console.log(fs.openSync(,'w+'));
+  
         fs.writeFileSync(path.join(__dirname , '../' , 'public','images' , req.body.name), buffer);
         let images = fs.readdirSync(path.join(__dirname,'../','public','images').toString());
         res.json(images);

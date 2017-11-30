@@ -49,7 +49,9 @@ app.use(function(req, res, next){
     return;
 });
 app.use(function(err, req, res, next){
-    console.log(err);
+    if(process.env.NODE_ENV !== "production"){
+        console.log(err);
+    }
     if (err instanceof Array){  
         res.status(err.status || 401);
         res.json({error: err[0].msg});
