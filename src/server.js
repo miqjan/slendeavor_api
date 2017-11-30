@@ -19,7 +19,7 @@ let conn = mongoose.connect('mongodb://root:root@ds127375.mlab.com:27375/slendea
 mongoose.connection.on('error', console.error.bind(console, 'connection error:'));
 mongoose.connection.once('open', ()=>console.log('connected'));
 
-app.set('port', process.env.PORT || 3000);
+app.set('port', process.env.PORT || 5000);
 
 
 app.use(bodyParser.json({limit: '50mb'}));
@@ -32,7 +32,7 @@ app.use((req,res,next)=>{
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
     next();
 });
-app.use(express.static(path.join(__dirname,'../','public')));
+app.use(express.static(path.join(__dirname,'public')));
 app.use(checkAuthentication);
 app.use('/work', WorkRouter);
 app.use('/gallery', GalleryRouter);
