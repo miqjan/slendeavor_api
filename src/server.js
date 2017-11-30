@@ -1,6 +1,7 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
+import path from 'path';
 import validator  from 'express-validator';
 
 import UserRouter, { checkAuthentication } from './routes/user_router';
@@ -31,7 +32,7 @@ app.use((req,res,next)=>{
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
     next();
 });
-app.use(express.static('public'));
+app.use(express.static(path.join(__dirname,'../','public')));
 app.use(checkAuthentication);
 app.use('/work', WorkRouter);
 app.use('/gallery', GalleryRouter);
