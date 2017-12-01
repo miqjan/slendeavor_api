@@ -7,7 +7,7 @@ const router = express.Router();
 
 router.get('/', async function(req, res, next) { 
     try{
-        let images = fs.readdirSync(path.join(__dirname,'../','public','images'));
+        let images = fs.readdirSync(path.join(__dirname,'../../','public','images'));
         res.json(images);
     } catch (error) {
         return next(error);
@@ -25,8 +25,8 @@ router.post('/', MustBeSuperAdmin, async function(req, res, next) {
         let buffer = new Buffer(data, 'base64');
         
   
-        fs.writeFileSync(path.join(__dirname , '../' , 'public','images' , req.body.name), buffer);
-        let images = fs.readdirSync(path.join(__dirname,'../','public','images').toString());
+        fs.writeFileSync(path.join(__dirname , '../../' , 'public','images' , req.body.name), buffer);
+        let images = fs.readdirSync(path.join(__dirname,'../../','public','images').toString());
         res.json(images);
     } catch (error) {
         return next(error);
@@ -37,8 +37,8 @@ router.post('/delate', MustBeSuperAdmin , async function(req,res,next){
     try {
         req.checkBody('name','Incorect name of file').notEmpty();
         await req.asyncValidationErrors();
-        fs.unlinkSync(path.join(__dirname,'../','public','images', req.body.name));
-        let images = fs.readdirSync(path.join(__dirname,'../','public','images'));
+        fs.unlinkSync(path.join(__dirname,'../../','public','images', req.body.name));
+        let images = fs.readdirSync(path.join(__dirname,'../../','public','images'));
         res.json(images);
     } catch (error) {
         return next(error);

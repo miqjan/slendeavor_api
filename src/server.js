@@ -32,7 +32,7 @@ app.use((req,res,next)=>{
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
     next();
 });
-app.use(express.static(path.join(__dirname,'public')));
+app.use(express.static(path.join(__dirname,'../','public')));
 app.use(checkAuthentication);
 app.use('/work', WorkRouter);
 app.use('/gallery', GalleryRouter);
